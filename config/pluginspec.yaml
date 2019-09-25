@@ -9,6 +9,49 @@ authorUrl: mailto:lrochette@electric-cloud.com
 category: Resource Management
 
 procedures:
+- name: createIncident
+  description: Create a new incident
+  steps:
+  -
+  name: createIncident
+  shell: ec-perl
+  hasConfig: true
+  parameters:
+  - name: microservice
+    documentation: The name of the microservice
+    type: entry
+    required: true
+    label: Microservice name
+  - name: environment
+    documentation: The name of the environment
+    type: entry
+    required: true
+    label: Environment name
+  - name: process
+    documentation: The name of the process
+    type: entry
+    required: true
+    label: Process name
+  - name: url
+    documentation: URL pointing to the failed job
+    type: entry
+    required: true
+    label: url
+  - name: operatorGroupId
+    documentation: ID of the TOPdesk operator group to assign the incident to
+    type: entry
+    required: true
+    label: operatorGroupId
+  - name: externalNumber
+    documentation: External number referring to the failed job to show in TOPdesk
+    type: entry
+    required: true
+    label: externalNumber
+  outputParameters:
+      incident: JSON representation of the created incident
+      incidentId: Incident ID of the created incident
+  # Steps are not defined so we assume that this is one-step procedure with a single step named Deploy
+  shell: ec-perl
 - name: createOperatorChange
   description: Create a new change for an operator
   steps:
@@ -75,6 +118,21 @@ configuration:
      checkedValue: true
      uncheckedValue: false
      initiallyChecked: 1
+   - name: callerId
+     type: entry
+     label: callerId
+     required: true
+     documentation: Id of the caller in TOPdesk to whom all created incidents and changes are assigned.
+   - name: processingStatusId
+     type: entry
+     label: processingStatusId
+     required: true
+     documentation: Id of the processingStatus for incidents created in TOPdesk
+   - name: subcategoryId
+     type: entry
+     label: subcategoryId
+     required: true
+     documentation: Id of the the subcategory for the incidents created in TOPdesk
    - name: debugLevel
      # This parameter name "debugLevel" is supported by ECPDF Logger out of the box
      label: Debug Level

@@ -4,12 +4,10 @@
 -->
 
 <editor>
-  <help>/commander/pages/@PLUGIN_NAME@/help?s=Administration&amp;amp;ss=Plugins#CreateConfiguration</help>
+  <help>/commander/pages/@PLUGIN_NAME@/help?s=Administration&amp;ss=Plugins#CreateConfiguration</help>
   <formElement>
     <type>entry</type>
     <property>config</property>
-    <configuration>1</configuration>
-    <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
     <required>1</required>
     <documentation>The name for the created configuration.</documentation>
     <label>Configuration Name:</label>
@@ -44,6 +42,27 @@
     <checkedValue>true</checkedValue>
     <initiallyChecked>1</initiallyChecked>
     <uncheckedValue>false</uncheckedValue>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>callerId</property>
+    <required>1</required>
+    <documentation>Id of the caller in TOPdesk to whom all created incidents and changes are assigned.</documentation>
+    <label>callerId:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>processingStatusId</property>
+    <required>1</required>
+    <documentation>Id of the processingStatus for incidents created in TOPdesk</documentation>
+    <label>processingStatusId:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>subcategoryId</property>
+    <required>1</required>
+    <documentation>Id of the the subcategory for the incidents created in TOPdesk</documentation>
+    <label>subcategoryId:</label>
   </formElement>
   <formElement>
     <type>select</type>

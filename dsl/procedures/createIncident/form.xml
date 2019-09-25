@@ -1,0 +1,58 @@
+<!--
+    This form is generated automatically from the parameters pluginspec.
+    Please not not edit this file manually as it will be regenerated.
+-->
+<editor>
+  <help>/commander/pages/@PLUGIN_NAME@/help?s=Administration&amp;ss=Plugins#createIncident</help>
+  <formElement>
+    <type>entry</type>
+    <property>config</property>
+    <configuration>1</configuration>
+    <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+    <required>1</required>
+    <documentation>Previously defined configuration for the plugin</documentation>
+    <label>Configuration Name:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>microservice</property>
+    <required>1</required>
+    <documentation>The name of the microservice</documentation>
+    <label>Microservice name:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>environment</property>
+    <required>1</required>
+    <documentation>The name of the environment</documentation>
+    <label>Environment name:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>process</property>
+    <required>1</required>
+    <documentation>The name of the process</documentation>
+    <label>Process name:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>url</property>
+    <required>1</required>
+    <documentation>URL pointing to the failed job</documentation>
+    <label>url:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>operatorGroupId</property>
+    <required>1</required>
+    <documentation>ID of the TOPdesk operator group to assign the incident to</documentation>
+    <label>operatorGroupId:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>externalNumber</property>
+    <required>1</required>
+    <documentation>External number referring to the failed job to show in TOPdesk</documentation>
+    <label>externalNumber:</label>
+  </formElement>
+</editor>
