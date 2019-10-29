@@ -60,11 +60,26 @@ procedures:
   shell: ec-perl
   hasConfig: true
   parameters:
-  - name: payload
-    documentation: The JSON content of the operator change to create.
-    type: textarea
+  - name: pipelineJob
+    documentation: The name of the pipeline job
+    type: entry
     required: true
-    label: Change payload
+    label: Name of the pipeline job
+  - name: url
+    documentation: URL pointing to the Pipeline job requesting approval
+    type: entry
+    required: true
+    label: url
+  - name: templateNumber
+    documentation: Number of the Change Template to apply when creating the Request for Change in TOPdesk
+    type: entry
+    required: true
+    label: templateNumber
+  - name: externalNumber
+    documentation: External number referring to the failed job to show in TOPdesk
+    type: entry
+    required: true
+    label: externalNumber
   outputParameters:
       change: JSON representation of the created operator change
       changeId: Change ID of the created operator change
@@ -126,12 +141,12 @@ configuration:
    - name: processingStatusId
      type: entry
      label: processingStatusId
-     required: true
+     required: false
      documentation: Id of the processingStatus for incidents created in TOPdesk
    - name: subcategoryId
      type: entry
      label: subcategoryId
-     required: true
+     required: false
      documentation: Id of the the subcategory for the incidents created in TOPdesk
    - name: debugLevel
      # This parameter name "debugLevel" is supported by ECPDF Logger out of the box

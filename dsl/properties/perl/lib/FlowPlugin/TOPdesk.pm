@@ -38,12 +38,13 @@ sub createIncident {
                         '<br><b>Process:</b> '.$params->getParameter('process')->getValue().
                         '<br><b>CloudBees Flow Url:</b> '.$params->getParameter('url')->getValue();
     my $externalNumber = $params->getParameter('externalNumber')->getValue();
+    my $truncatedExternalNumber = substr($externalNumber, 0, min(60, length($externalNumber)));
     my $briefDescription = 'Cloudbees Flow failure: '.$externalNumber;
     my $truncatedBriefDescription = substr($briefDescription, 0, min(80, length($briefDescription)));
-    print  "briefDescription " . Dumper($truncatedBriefDescription);
+    #print  "briefDescription " . Dumper($truncatedBriefDescription);
     my $payload = {
              briefDescription => $truncatedBriefDescription,
-             externalNumber => $externalNumber,
+             externalNumber => $truncatedExternalNumber,
              request => $requestField,
              callerLookup => {
                           id => $config->getParameter('callerId')->getValue()
@@ -115,12 +116,33 @@ sub createOperatorChange {
     my $url = $config->getParameter('endpoint')->getValue();
     $url .= "/tas/api/operatorChanges";
 
-    my $payload = $params->getParameter('payload')->getValue();
+    my $pipelineRun = $params->getParameter('pipelineJob')->getValue();
+    my $now = DateTime->now;
+    my $flowUrl = $params->getParameter('url')->getValue();
+    my $requestField = <<"END_MESSAGE";
+A Pipeline run requires approval:
+
+Pipeline Run: $pipelineRun
+Date/Time: $now
+CloudBees Flow Url: $flowUrl
+END_MESSAGE
+    my $externalNumber = $params->getParameter('externalNumber')->getValue();
+    my $truncatedExternalNumber = substr($externalNumber, 0, min(60, length($externalNumber)));
+    my $payload = {
+             externalNumber => $truncatedExternalNumber,
+             request => $requestField,
+             requester => {
+                          id => $config->getParameter('callerId')->getValue()
+             },
+             template => {
+                          number => $params->getParameter('templateNumber')->getValue()
+             }
+        };
 
     # loading component here using PluginObject;
     my $restComponent = $context->newRESTClient($config);
     my $request = $restComponent->newRequest('POST' => $url);
-    $request->content($payload);
+    $request->content(encode_json $payload);
     $request->header('Content-type', "application/json");
 
     if (my $cred = $config->getParameter('credential')) {
@@ -145,7 +167,7 @@ sub createOperatorChange {
     else {
       $stepResult->setJobStepOutcome('error');
       $stepResult->setJobStepSummary("Failed POST request to $url");
-      printf("Failed  POST request to $url\n\t%s\n",$response->status_line);
+      printf("Failed POST request to $url\n\t%s\n",$response->status_line);
       # this will abort whole procedure during apply, otherwise just step will be aborted.
       # $stepResult->abortProcedureOnApply(1);
     }
