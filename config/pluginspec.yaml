@@ -101,6 +101,21 @@ procedures:
     label: Operator change ID
   outputParameters:
       change: JSON representation of the operator change
+
+- name: approveOrRejectPipelineGate
+  description: Approve or Reject the Pipeline
+  steps:
+  -
+  name: approveOrRejectPipelineGate
+  shell: ec-perl
+  hasConfig: false
+  parameters:
+  - name: action
+    documentation: "Action: either 1 (approve) or 0 (reject)"
+    type: entry
+    required: true
+    label: Action
+
 # This is a declaration for the plugin configuration
 configuration:
   # Shell to be used for checking connection

@@ -213,7 +213,7 @@ sub getOperatorChange {
     else {
       $stepResult->setJobStepOutcome('error');
       $stepResult->setJobStepSummary("Failed GET request to $url");
-      printf("Failed  GET request to $url\n\t%s\n",$response->status_line);
+      printf("Failed GET request to $url\n\t%s\n",$response->status_line);
     }
 
     $stepResult->apply();
@@ -221,5 +221,12 @@ sub getOperatorChange {
 ## === step ends ===
 # Please do not remove the marker above, it is used to place new procedures into this file.
 
+sub approveOrRejectPipelineGate {
+    my ($pluginObject) = @_;
+    my $context = $pluginObject->newContext();
+    my $params = $context->getStepParameters();
+    my $action = $params->getParameter('action')->getValue();
+    printf($action == 1 ? "approved" : "rejected");
+}
 
 1;

@@ -1,0 +1,14 @@
+<!--
+    This form is generated automatically from the parameters pluginspec.
+    Please not not edit this file manually as it will be regenerated.
+-->
+<editor>
+  <help>/commander/pages/@PLUGIN_NAME@/help?s=Administration&amp;ss=Plugins#approveOrRejectPipelineGate</help>
+  <formElement>
+    <type>entry</type>
+    <property>action</property>
+    <required>1</required>
+    <documentation>Action: either 1 (approve) or 0 (reject)</documentation>
+    <label>Action:</label>
+  </formElement>
+</editor>
