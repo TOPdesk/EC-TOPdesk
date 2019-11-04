@@ -11,4 +11,11 @@
     <documentation>Action: either 1 (approve) or 0 (reject)</documentation>
     <label>Action:</label>
   </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>correlationId</property>
+    <required>1</required>
+    <documentation>The correlationId that points to the Manual approval gate, e.g. /flowRuntime/$[/myPipelineRuntime/id]/stage/$[/myStage/stageName]/gate/$[/myGate/gateType]/taskName/[task_name_of_the_manual_step]</documentation>
+    <label>correlationId:</label>
+  </formElement>
 </editor>

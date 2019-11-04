@@ -107,24 +107,34 @@ sub createIncident {
 sub createOperatorChange {
     my ($pluginObject) = @_;
     my $context = $pluginObject->newContext();
+    my $pluginName = 'EC-TOPdesk-'.$pluginObject->getPluginVersion();
     my $params = $context->getStepParameters();
     #print "Parameters: " . Dumper $params;
     # Config is an FlowPDF::Config object;
     my $config = $context->getConfigValues();
+
+    #print "pluginObject: " . Dumper $pluginObject;
+    #print "Context: " . Dumper $context;
     #print "Configuration: " . Dumper $config;
 
     my $url = $config->getParameter('endpoint')->getValue();
     $url .= "/tas/api/operatorChanges";
+    my $flowServerUrl = $config->getParameter('flowServerUrl')->getValue();
 
     my $pipelineRun = $params->getParameter('pipelineJob')->getValue();
     my $now = DateTime->now;
-    my $flowUrl = $params->getParameter('url')->getValue();
+    my $flowUrl = $flowServerUrl.$params->getParameter('pipelineRunPath')->getValue();
+    my $correlationId = $params->getParameter('correlationId')->getValue();
     my $requestField = <<"END_MESSAGE";
 A Pipeline run requires approval:
 
 Pipeline Run: $pipelineRun
 Date/Time: $now
 CloudBees Flow Url: $flowUrl
+END_MESSAGE
+    my $optionalMemoField = <<"END_MESSAGE";
+callback_url: $flowServerUrl/rest/v1.0/jobs?request=runProcedure&projectName=$pluginName&procedureName=approveOrRejectPipelineGate
+correlation_id: $correlationId
 END_MESSAGE
     my $externalNumber = $params->getParameter('externalNumber')->getValue();
     my $truncatedExternalNumber = substr($externalNumber, 0, min(60, length($externalNumber)));
@@ -136,6 +146,9 @@ END_MESSAGE
              },
              template => {
                           number => $params->getParameter('templateNumber')->getValue()
+             },
+             optionalFields1 => {
+                          memo1 => $optionalMemoField
              }
         };
 
@@ -220,13 +233,5 @@ sub getOperatorChange {
 }
 ## === step ends ===
 # Please do not remove the marker above, it is used to place new procedures into this file.
-
-sub approveOrRejectPipelineGate {
-    my ($pluginObject) = @_;
-    my $context = $pluginObject->newContext();
-    my $params = $context->getStepParameters();
-    my $action = $params->getParameter('action')->getValue();
-    printf($action == 1 ? "approved" : "rejected");
-}
 
 1;

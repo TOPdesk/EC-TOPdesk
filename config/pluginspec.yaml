@@ -61,15 +61,15 @@ procedures:
   hasConfig: true
   parameters:
   - name: pipelineJob
-    documentation: The name of the pipeline job
+    documentation: The name of the pipeline job, e.g. $[/myPipeline/pipelineName]
     type: entry
     required: true
-    label: Name of the pipeline job
-  - name: url
-    documentation: URL pointing to the Pipeline job requesting approval
+    label: Name of the Pipeline.
+  - name: pipelineRunPath
+    documentation: Path pointing to the Pipeline Run job requesting approval, e.g. /flow/#pipeline-run/$[/myPipeline/pipelineId]/$[/myPipelineRuntime/flowRuntimeId/]
     type: entry
     required: true
-    label: url
+    label: Path to the Pipeline Run Job.
   - name: templateNumber
     documentation: Number of the Change Template to apply when creating the Request for Change in TOPdesk
     type: entry
@@ -80,6 +80,11 @@ procedures:
     type: entry
     required: true
     label: externalNumber
+  - name: correlationId
+    documentation: The correlationId that points to the Manual approval gate, e.g. /flowRuntime/$[/myPipelineRuntime/id]/stage/$[/myStage/stageName]/gate/$[/myGate/gateType]/taskName/[task_name_of_the_manual_step]
+    type: entry
+    required: true
+    label: correlationId
   outputParameters:
       change: JSON representation of the created operator change
       changeId: Change ID of the created operator change
@@ -115,6 +120,11 @@ procedures:
     type: entry
     required: true
     label: Action
+  - name: correlationId
+    documentation: The correlationId that points to the Manual approval gate, e.g. /flowRuntime/$[/myPipelineRuntime/id]/stage/$[/myStage/stageName]/gate/$[/myGate/gateType]/taskName/[task_name_of_the_manual_step]
+    type: entry
+    required: true
+    label: correlationId
 
 # This is a declaration for the plugin configuration
 configuration:
@@ -131,6 +141,11 @@ configuration:
      label: Description
      required: false
      documentation: Description for the configuration.
+   - name: flowServerUrl
+     label: Flow Server Url
+     type: entry
+     required: true
+     documentation: The URL which TOPdesk can use to reach this Flow instance.
    - name: endpoint
      label: Endpoint
      type: entry

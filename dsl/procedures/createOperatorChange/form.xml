@@ -17,15 +17,15 @@
     <type>entry</type>
     <property>pipelineJob</property>
     <required>1</required>
-    <documentation>The name of the pipeline job</documentation>
-    <label>Name of the pipeline job:</label>
+    <documentation>The name of the pipeline job, e.g. $[/myPipeline/pipelineName]</documentation>
+    <label>Name of the Pipeline.:</label>
   </formElement>
   <formElement>
     <type>entry</type>
-    <property>url</property>
+    <property>pipelineRunPath</property>
     <required>1</required>
-    <documentation>URL pointing to the Pipeline job requesting approval</documentation>
-    <label>url:</label>
+    <documentation>Path pointing to the Pipeline Run job requesting approval, e.g. /flow/#pipeline-run/$[/myPipeline/pipelineId]/$[/myPipelineRuntime/flowRuntimeId/]</documentation>
+    <label>Path to the Pipeline Run Job.:</label>
   </formElement>
   <formElement>
     <type>entry</type>
@@ -40,5 +40,12 @@
     <required>1</required>
     <documentation>External number referring to the failed job to show in TOPdesk</documentation>
     <label>externalNumber:</label>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>correlationId</property>
+    <required>1</required>
+    <documentation>The correlationId that points to the Manual approval gate, e.g. /flowRuntime/$[/myPipelineRuntime/id]/stage/$[/myStage/stageName]/gate/$[/myGate/gateType]/taskName/[task_name_of_the_manual_step]</documentation>
+    <label>correlationId:</label>
   </formElement>
 </editor>
